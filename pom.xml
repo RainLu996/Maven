@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+
+    <!-- ============================================================================ -->
+<!--  modelVersion：指定了当前POM模型的版本，对于Maven2及Maven 3来说，它只能是4.0.0；-->
+  <modelVersion>4.0.0</modelVersion>
+    <!-- ============================================================================ -->
+
+
+
+
+
+    <!-- ============================================================================ -->
+<!--  自己项目的坐标 -->
+  <groupId>org.example</groupId> <!--组织 id，一般是公司域名的倒写。-->
+  <artifactId>test01</artifactId> <!--项目名称，也是模块名称，对应 groupId 中 项目中的子项目。-->
+  <version>1.0-SNAPSHOT</version><!--项目的版本号。如果项目还在开发中，是不稳定版本,通常在版本后带-SNAPSHOT-->
+    <!-- ============================================================================ -->
+
+
+
+    <!-- ============================================================================ -->
+<!--               项目打包的类型，可以使 jar、war、rar、ear、pom，默认是 jar               -->
+  <packaging>jar</packaging>
+    <!-- ============================================================================ -->
+
+
+    <!-- ============================================================================ -->
+<!--                       自动生成的网站地址，用做展示给其他人看                  -->
+  <name>test01</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+    <!-- ============================================================================ -->
+
+
+
+
+    <!-- ============================================================================ -->
+<!--                         配置Maven的使用属性                            -->
+  <properties>
+
+<!--      项目构建使用的编码，避免中文乱码-->
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+<!--    指定编译java代码时使用的JDK版本-->
+    <maven.compiler.source>1.8</maven.compiler.source>
+
+<!--    指定java项目该依赖于哪个JDK版本运行-->
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+<!--      指定生成报告时使用的编码方式-->
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+<!--      其中还可以定义（配置属性）【全局变量】：标签名就是全局变量的名称-->
+      <junit.version>4.13.2</junit.version>
+
+  </properties>
+    <!-- ============================================================================ -->
+
+
+
+    <!-- ============================================================================ -->
+<!--                                Maven项目依赖                             -->
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version> <!-- EL表达式用来使用全局变量值 -->
+      <scope>test</scope>  <!-- 依赖范围 -->
+    </dependency>
+  </dependencies>
+    <!-- ============================================================================ -->
+
+
+
+    <!-- ============================================================================ -->
+<!--               控制配置maven构建项目时的参数设置，设置JDK的版本              -->
+  <build>
+
+      <!--   指定资源位置
+      src/main/java 和 src/test/java 这两个目录中的所有*.java 文件
+      会分别在 comile 和 test-comiple 阶段被编译，编译结果分别放到了
+       target/classes 和 targe/test-classes 目录中，
+       但是这两个目录中的其他文件都会被忽略掉，如果需要把 src 目录下
+       的文件包放到 target/classes 目录，作为输出的 jar 一部分。
+       需要指定资源文件位置。以下内容放到<buid>标签中。
+       -->
+      <resources>
+        <resource>
+          <directory>src/main/resources</directory><!--所在的目录-->
+          <includes><!--包括目录下的.properties,.xml 文件都会扫描到-->
+            <include>**/*.properties</include>
+            <include>**/*.xml</include>
+          </includes>
+          <!-- filtering 选项 false 不启用过滤器， *.property 已经起到过滤的作用了 -->
+          <filtering>false</filtering>
+        </resource>
+    </resources>
+
+
+<!--    插件管理-->
+    <pluginManagement><!-- 锁定插件版本以避免使用 Maven 默认值（可能移至父 pom） -->
+      <plugins>
+
+        <!-- 清除生命周期，参见 https:maven.apache.orgrefcurrentmaven-corelifecycles.htmlclean_Lifecycle -->
+        <plugin>
+<!--          清除生命周期的插件-->
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+
+        <!-- 默认生命周期，jar 打包：参见 https:maven.apache.orgrefcurrentmaven-coredefault-bindings.htmlPlugin_bindings_for_jar_packaging -->
+        <plugin>
+<!--          资源插件-->
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+
+        <plugin>
+<!--          编译插件-->
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+        </plugin>
+
+        <plugin>
+<!--          生成报告的插件-->
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+
+        <plugin>
+<!--          打包的插件-->
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+
+        <plugin>
+<!--          安装的插件-->
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+
+        <plugin>
+<!--          部署的插件-->
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+
+        <!-- 站点生命周期，参见 https:maven.apache.orgrefcurrentmaven-corelifecycles.htmlsite_Lifecycle -->
+        <plugin>
+<!--          生成网站站点的插件-->
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+
+        <plugin>
+<!--          生成项目报告信息的插件-->
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+  </build>
+    <!-- ============================================================================ -->
+</project>
